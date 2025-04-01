@@ -6,9 +6,3 @@ Um microsserviço básico com Spring Boot, Spring Data JPA e MySQL, com document
 - Java 17+
 - MySQL 8+
 - Maven 3.6+
-
-## 🛠️ Configuração
-
-1. **Banco de Dados**:
-```sql
-CREATE DATABASE microservico;
