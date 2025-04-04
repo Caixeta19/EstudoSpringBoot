@@ -1,6 +1,6 @@
 # 🚀 Microserviço Spring Boot
 
-Um microsserviço básico com Spring Boot, Spring Data JPA e MySQL, com documentação OpenAPI.
+Um microsserviço básico com Spring Boot, Spring Data JPA, MySQL e Swagger para  gerar a documentação da API.
 
 ## 📋 Pré-requisitos
 - Java 17+
