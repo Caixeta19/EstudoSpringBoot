@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input, button { margin: 5px; padding: 5px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+    <h1>Cadastro de Usuários</h1>
+<form action="" id="salvar">
+    <div>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="email" id="email" placeholder="Email">
+         <input type="password" id="senha" placeholder="senha">
+        <button onclick="salvar()">Salvar</button>
+    </div>
+</form>
+    <h2>Lista de Usuários</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th><th>Nome</th><th>Email</th><th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaUsuarios">
+        
+        </tbody>
+    </table>
+
+    <script>
+        const API_URL = "http://localhost:8080/usuarios";
+
+        function listarUsuarios() {
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(usuarios => {
+                    const tabela = document.getElementById("tabelaUsuarios");
+                    tabela.innerHTML = "";
+                    usuarios.forEach(usuario => {
+                        tabela.innerHTML += `
+                            <tr>
+                                <td>${usuario.id}</td>
+                                <td>${usuario.nome}</td>
+                                <td>${usuario.email}</td>
+                                <td>
+                                    <button onclick="deletarUsuario(${usuario.id})">Deletar</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+
+        function salvarUsuario() {
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+
+            fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ nome, email })
+            })
+            .then(() => {
+                document.getElementById("nome").value = "";
+                document.getElementById("email").value = "";
+                listarUsuarios();
+            });
+        }
+
+        function deletarUsuario(id) {
+            fetch(`${API_URL}/${id}`, { method: "DELETE" })
+                .then(() => listarUsuarios());
+        }
+
+        // Carrega usuários ao abrir a página
+        listarUsuarios();
+    </script>
+</body>
+</html>
